@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<link th:href="@{/easyui/themes/icon.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/easyui/themes/default/easyui.css}" rel="stylesheet">
+<body id="bodylayout">
+<table class="easyui-datagrid" id="dg" title="角色管理"
+       style="width:100%;height:500px" toolbar="#toolbar" idField="id"
+       url="/role/getAll"
+       data-options="
+				fitColumns:true,
+                rownumbers:true,
+                singleSelect:true,
+                autoRowHeight:true,
+                pagination:true,
+				pageNumber : 1,
+				pageList : [ 5, 10, 15, 20, 25 ],
+				beforePageText : '第',
+				afterPageText : '页    共 {pages} 页',
+				displayMsg : '当前显示 {from} - {to} 条记录   共 {total} 条记录',
+                pageSize:10">
+    <thead>
+    <tr>
+        <th data-options="field:'rid'" width="5" align="center">角色id</th>
+        <th data-options="field:'rolename'" width="10" align="center">角色名称</th>
+        <th data-options="field:'rdesc' " width="20" align="center">角色描述</th>
+        <th data-options="field:'rchild',formatter:rchildFormatter" width="20" align="center">下级角色</th>
+        <th data-options="field:'updatetime' " width="20" align="center">上一次修改时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<div id="toolbar">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true"
+       onclick="javascript:openRoleAddDialog()">添加</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true"
+       onclick="javascript:deleteRole()">删除</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true"
+       onclick="javascript:openRoleModifyDialog()">修改</a>
+</div>
+
+<div id="dlg-buttons">
+    <a href="javascript:saveRole()" class="easyui-linkbutton"
+       iconCls="icon-ok">保存</a>
+    <a href="javascript:closeRoleDialog()"
+       class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+</div>
+
+<div id="dlg" class="easyui-dialog"
+     style="width: 500px;height:400px;padding:50px 10px;" modal="true" closed="true"
+     buttons="#dlg-buttons">
+    <form method="post" id="fm">
+        <table cellspacing="8px;">
+            <tr>
+                <td><input type="hidden" id="rid" name="rid"/>
+            </tr>
+            <tr>
+                <td>角色名称</td>
+                <td><input type="text" id="rolename" name="rolename"
+                           class="easyui-validatebox" required="true"/> <span
+                        style="color: red">*</span></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>角色描述</td>
+                <td><input type="text" id="rdesc" name="rdesc"
+                           class="easyui-validatebox" required="true"/> <span
+                        style="color: red">*</span></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>是否拥有下级角色</td>
+                <td><select id="parent" name="rchild" class="easyui-combobox"
+                            style="width:200px;"></select><span style="color: red">*</span></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>资源访问列表</td>
+                <td><select id="cc" name="url" class="easyui-combotree"
+                            data-options="required:true"
+                            multiple style="width:200px;">
+                </select></td>
+                <td></td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+<script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/admin/role.js}"></script>
+<script type="text/javascript" th:src="@{/easyui/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/easyui/jquery.easyui.min.js}"></script>
+<script type="text/javascript" th:src="@{/easyui/locale/easyui-lang-zh_CN.js}"></script>
+</html>

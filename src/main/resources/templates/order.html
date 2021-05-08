@@ -1,0 +1,83 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="order">
+    <div class="container">
+        <div class="check-out">
+            <div class="bs-example4" data-example-id="simple-responsive-table">
+                <div class="table-responsive">
+                    <th:block th:if="${#lists.isEmpty(order)}">
+                        <h3 th:text="'订单里里空空的,快去下订单吧'"></h3>
+                        <a th:href="@{/user/(state=1)}" th:text="去下订单"></a>
+                    </th:block>
+                    <table>
+                        <th:block th:if="${order} != null" th:each="o,iterStat:${order}">
+                            <tr>
+                                <th>订单信息</th>
+                                <th>支付方式</th>
+                                <th>下单时间</th>
+                                <th>结算时间</th>
+                                <th>订单状态</th>
+                            </tr>
+                            <tr class="cart-header">
+                                <td class="ring-in" style="width:250px;">
+                                    <div class="sed" >
+                                        <p th:text="'订单号：'+${o.oid}"></p>
+                                        <p th:text="'地址：'+${o.oadress}"></p>
+                                        <p th:text="'总价格：'+${o.oprice}"></p>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </td>
+                                <td><p th:text="${o.paytype}"></p></td>
+                                <td><p th:text="${o.odatetime}"></p></td>
+                                <td><p th:text="${o.updatetime}"></p></td>
+                                <td th:switch="${o.state}">
+                                    <div th:case="0">
+                                        <p style="color: red" th:text="待支付"></p>
+                                        <a class="item_add hvr-skew-backward"
+                                           th:href="@{/user/chase(oid=${o.oid})}">支付</a>
+                                        <a class="item_add hvr-skew-backward"
+                                           th:href="@{/user/cancel(oid=${o.oid})}">取消</a>
+                                    </div>
+                                    <th:block th:case="1">
+                                        <p style="color: green;" th:text="已支付"></p>
+                                        <a class="item_add hvr-skew-backward"
+                                           th:href="@{/user/delete(oid=${o.oid})}">删除</a>
+                                    </th:block>
+                                    <th:block th:case="2">
+                                        <p style="color: grey" th:text="已取消"></p>
+                                        <a class="item_add hvr-skew-backward"
+                                           th:href="@{/user/delete(oid=${o.oid})}">删除</a>
+                                    </th:block>
+                                </td>
+                            </tr>
+                            <th:block th:each="oi,iter:${o.orderInfoList}">
+                                <tr>
+                                    <td>名称<p th:text="${oi.goods.gname}"></p></td>
+                                    <td><img style="width: 150px; height: 75px;"
+                                             src="" th:attr="src=${oi.goods.gimage}"/></td>
+                                    <td>数量<p th:text="${oi.ofcount}"></p></td>
+                                    <td>单价<p th:text="${oi.ofprice}"></p></td>
+                                </tr>
+                            </th:block>
+                        </th:block>
+                    </table>
+                    <nav>
+                        <ul class="pagination">
+                            <li class="disabled"><a href="#">«</a></li>
+                            <li><a href="#" th:href="@{/user/(page=0,state=2)}">1 <span
+                                    class="sr-only">(current)</span></a></li>
+                            <li><a href="#" th:href="@{/user/(page=1,state=2)}">2</a></li>
+                            <li><a href="#" th:href="@{/user/(page=2,state=2)}">3</a></li>
+                            <li><a href="#" th:href="@{/user/(page=3,state=2)}">4</a></li>
+                            <li><a href="#" th:href="@{/user/(page=4,state=2)}">5</a></li>
+                            <li><a href="#" th:href="@{/user/(page=5,state=2)}">»</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<link th:href="@{/easyui/themes/icon.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/easyui/themes/default/easyui.css}" rel="stylesheet">
+<body id="bodylayout">
+<table class="easyui-datagrid" id="dg" title="角色管理"
+       style="width:100%;height:500px" toolbar="#toolbar" idField="id"
+       url="/url/getAll"
+       data-options="
+				fitColumns:true,
+                rownumbers:true,
+                singleSelect:true,
+                autoRowHeight:true,
+                pagination:true,
+				pageNumber : 1,
+				pageList : [ 5, 10, 15, 20, 25 ],
+				beforePageText : '第',
+				afterPageText : '页    共 {pages} 页',
+				displayMsg : '当前显示 {from} - {to} 条记录   共 {total} 条记录',
+                pageSize:10">
+    <thead>
+    <tr>
+        <th data-options="field:'fid'" width="5" align="center">资源id</th>
+        <th data-options="field:'fname'" width="10" align="center">资源名称</th>
+        <th data-options="field:'furl' " width="20" align="center">资源路径</th>
+        <th data-options="field:'updatetime' " width="20" align="center">上一次修改时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<div id="toolbar">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true"
+       onclick="javascript:openUrlAddDialog()">添加</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true"
+       onclick="javascript:deleteUrl()">删除</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true"
+       onclick="javascript:openUrlModifyDialog()">修改</a>
+</div>
+
+<div id="dlg-buttons">
+    <a href="javascript:saveUrl()" class="easyui-linkbutton"
+       iconCls="icon-ok">保存</a>
+    <a href="javascript:closeUrlDialog()"
+       class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+</div>
+
+<div id="dlg" class="easyui-dialog"
+     style="width: 320px;height:220px;padding:50px 10px;" modal="true" closed="true"
+     buttons="#dlg-buttons">
+    <form method="post" id="fm">
+        <table cellspacing="8px;">
+            <tr>
+                <td><input type="hidden" id="fid" name="fid"/>
+            </tr>
+            <tr>
+                <td>资源名称</td>
+                <td><input type="text" id="fname" name="fname"
+                           class="easyui-validatebox" required="true"/> <span
+                        style="color: red">*</span></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>资源路径</td>
+                <td><input type="text" id="furl" name="furl"
+                           class="easyui-validatebox" required="true"/> <span
+                        style="color: red">*</span></td>
+                <td></td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+<script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/admin/url.js}"></script>
+<script type="text/javascript" th:src="@{/easyui/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/easyui/jquery.easyui.min.js}"></script>
+<script type="text/javascript" th:src="@{/easyui/locale/easyui-lang-zh_CN.js}"></script>
+</html>

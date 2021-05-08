@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8"/>
+</head>
+<link th:href="@{/easyui/themes/icon.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/easyui/themes/default/easyui.css}" rel="stylesheet">
+<body>
+<table class="easyui-datagrid" id="dg" title="商品管理"
+       style="width:100%;height:500px" toolbar="#toolbar" idField="id"
+       url="/goods/getAll"
+       data-options="
+				fitColumns:true,
+                rownumbers:true,
+                singleSelect:true,
+                autoRowHeight:true,
+                pagination:true,
+				pageNumber : 1,
+				pageList : [ 5, 10, 15, 20, 25 ],
+				beforePageText : '第',
+				afterPageText : '页    共 {pages} 页',
+				displayMsg : '当前显示 {from} - {to} 条记录   共 {total} 条记录',
+                pageSize:10">
+    <thead>
+    <tr>
+        <th data-options="field:'gid'" width="5" align="center">编号</th>
+        <th data-options="field:'gname'" width="10" align="center">名称</th>
+        <th data-options="field:'gprice',sortable: true" width="10" align="center" >单价</th>
+        <th data-options="field:'gtypename'" width="10" align="center">所属类别</th>
+        <th data-options="field:'gcount',styler:gcountStyler" width="7" align="center">库存</th>
+        <th data-options="field:'gimage',width:10,align:'center',formatter:imgFormatter">图片</th>
+        <th data-options="field:'gdesc',formatter:descFormatter" width="25" align="center">描述</th>
+        <th data-options="field:'gstate',styler:gstateStyler" width="5" align="center">状态</th>
+        <th data-options="field:'gdatetime',sortable: true" width="10" align="center">发布时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<div id="toolbar">
+    类别<select id="category" name="category" class="easyui-combobox"
+              style="width:100px;"></select>
+    价格<select id="price" name="price" class="easyui-combobox"
+              style="width:100px;"></select>
+    上架<input type="radio" name="checkState" value="1"/>
+    下架<input type="radio" name="checkState" value="0"/>
+    <input class="easyui-searchbox"
+           data-options="prompt:'Please Input Value',
+    menu:'#mm',searcher:findGoods"
+           type="text" id="snoo" size="50"/>
+    <div id="mm">
+        <div data-options="name:'gname',iconCls:'icon-ok'">商品名称</div>
+        <div data-options="name:'gid'">商品id</div>
+    </div>
+    <br>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true"
+       onclick="javascript:openGoodsAddDialog()">添加</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true"
+       onclick="javascript:deleteGoods()">删除</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true"
+       onclick="javascript:openGoodsModifyDialog()">修改</a>
+</div>
+
+<div id="dlg-buttons">
+    <a href="javascript:saveGoods()" class="easyui-linkbutton"
+       iconCls="icon-ok">保存</a>
+    <a href="javascript:closeStudentDialog()"
+       class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+</div>
+
+<div id="dlg2" class="easyui-dialog" closed="true">
+    <img id="simg"/>
+</div>
+
+<div id="dlg" class="easyui-dialog"
+     style="width: 730px;height:380px;padding:50px 10px;" modal="true" closed="true"
+     buttons="#dlg-buttons">
+    <form method="post" id="fm" enctype="multipart/form-data">
+        <table cellspacing="8px;">
+            <tr>
+                <td><input type="hidden" id="gid" name="gid"/>
+            </tr>
+            <tr>
+                <td>商品名</td>
+                <td><input type="text" id="gname" name="gname"
+                           class="easyui-validatebox" required="true"/> <span
+                        style="color: red">*</span></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>商品单价</td>
+                <td><input type="text" id="gprice" name="gprice"
+                           class="easyui-validatebox" required="true"/> <span
+                        style="color: red">*</span></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>商品所属类别</td>
+                <td><select id="gtypeid" name="gtypeid" class="easyui-combobox"
+                            style="width:200px;"></select><span style="color: red">*</span></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>商品库存</td>
+                <td><input class="easyui-slider" id="gcount" name="gcount" style="width:300px"
+                           data-options="showTip:true,max:200,
+                               rule: [0,'|',40,'|',80,'|',120,'|',160,'|',200]"/> <span
+                        style="color: red">*</span></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>商品描述</td>
+                <td><textarea type="" id="gdesc" name="gdesc"
+                              class="easyui-validatebox" required="true"></textarea> <span
+                        style="color: red">*</span></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>商品图片</td>
+                <td><input type="text" id="picture" name="onlinefilename"
+                           style="width:100%"/>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>商品状态</td>
+                <td><select id="gstate" name="gstate" class="easyui-combobox"
+                            style="width:200px;"></select><span style="color: red">*</span>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><input type="hidden" id="gdatetime" name="gdatetime"/>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+<script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/admin/goods.js}"></script>
+<script type="text/javascript" th:src="@{/easyui/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/easyui/jquery.easyui.min.js}"></script>
+<script type="text/javascript" th:src="@{/easyui/locale/easyui-lang-zh_CN.js}"></script>
+</html>

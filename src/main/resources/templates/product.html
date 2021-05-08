@@ -1,0 +1,204 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>网上吉他售卖商城</title>
+    <link th:href="@{/html/css/bootstrap.css}" rel="stylesheet" type="text/css" media="all"/>
+    <!-- Custom Theme files -->
+    <!--theme-style-->
+    <link th:href="@{/html/css/style.css}" rel="stylesheet" type="text/css" media="all"/>
+    <!--//theme-style-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="Shopin Responsive web template, Bootstrap Web Templates, Flat Web Templates, AndroId Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design"/>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <!--theme-style-->
+    <link th:href="@{/html/css/style4.css}" rel="stylesheet" type="text/css" media="all"/>
+    <!--//theme-style-->
+    <script th:src="@{/html/js/jquery.min.js}"></script>
+    <!--- start-rate---->
+    <script th:src="@{/html/js/jstarbox.js}"></script>
+    <link rel="stylesheet" th:href="@{/html/css/jstarbox.css}" type="text/css" media="screen" charset="utf-8"/>
+    <script type="text/javascript">
+        jQuery(function () {
+            jQuery('.starbox').each(function () {
+                var starbox = jQuery(this);
+                starbox.starbox({
+                    average: starbox.attr('data-start-value'),
+                    changeable: starbox.hasClass('unchangeable') ? false : starbox.hasClass('clickonce') ? 'once' : true,
+                    ghosting: starbox.hasClass('ghosting'),
+                    autoUpdateAverage: starbox.hasClass('autoupdate'),
+                    buttons: starbox.hasClass('smooth') ? false : starbox.attr('data-button-count') || 5,
+                    stars: starbox.attr('data-star-count') || 5
+                }).bind('starbox-value-changed', function (event, value) {
+                    if (starbox.hasClass('random')) {
+                        var val = Math.random();
+                        starbox.next().text(' ' + val);
+                        return val;
+                    }
+                })
+            });
+        });
+    </script>
+    <!---//End-rate---->
+</head>
+<body>
+<header class="header" th:include="header :: header"></header>
+<div class="banner-top">
+    <div class="container">
+        <h1>商品</h1>
+        <em></em>
+        <h2><a th:href="@{/main}">Home</a><label>/</label>商品</a></h2>
+    </div>
+</div>
+<div class="product">
+    <div class="container">
+        <div class="col-md-9">
+            <div class="mid-popular">
+                <th:block th:if="${#lists.isEmpty(goods)}">
+                    <h3 th:text="'暂时没有该类别的商品，请选择其他类别'"></h3>
+                </th:block>
+                <th:block th:each="g,iterStat:${goods}">
+                    <div style="width:30%;height: 350px" class="col-md-3 item-grid1 simpleCart_shelfItem">
+                        <div class=" mid-pop">
+                            <div class="pro-img">
+                                <img src="" th:attr="src=${g.gimage}" class="img-responsive" alt="">
+                                <div class="zoom-icon ">
+                                    <a href="#" th:href="${g.gimage}" rel="title"
+                                       class=" picture b-link-stripe b-animate-go  thickbox"><i
+                                            class="glyphicon glyphicon-search icon "></i></a>
+                                    <a href="#" th:href="@{'/item/'+${g.gid}}"><i
+                                            class="glyphicon glyphicon-menu-right icon"></i></a>
+                                </div>
+                            </div>
+                            <div class="mid-1">
+                                <div class="women">
+                                    <div class="women-top" style="height: 75px;width: 100%">
+                                        <span th:text="${g.category.cname}"></span>
+                                        <h6><a href="#" th:href="@{'/item/'+${g.gid}}"
+                                               th:text="${g.gname}"></a></h6>
+                                    </div>
+                                    <div class="img item_add">
+                                        <a href="#" th:href="@{/user/addfav(gid=${g.gid},state=0)}"><img
+                                                style="width: 40px;height: 40px"
+                                                th:src="@{/html/images/collect1.png}" alt=""></a>
+                                        <a href="#" th:href="@{/purchase/add(gid=${g.gid},gcount=1)}"><img
+                                                th:src="@{/html/images/ca.png}" alt=""></a>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="mid-2">
+                                    <p><em th:text="'价格:'+${g.gprice}" class="item_price"></em></p>
+                                    <div class="block">
+                                        <div class="starbox small ghosting"></div>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+            <center>
+                <nav>
+                    <ul class="pagination">
+                        <th:block th:if="${pageOut} == null">
+                            <li class="disabled"><a href="#">«</a></li>
+                            <li><a href="#" th:href="@{/(page=0)}">1 <span
+                                    class="sr-only">(current)</span></a></li>
+                            <li><a href="#" th:href="@{/(page=1)}">2</a></li>
+                            <li><a href="#" th:href="@{/(page=2)}">3</a></li>
+                            <li><a href="#" th:href="@{/(page=3)}">4</a></li>
+                            <li><a href="#" th:href="@{/(page=4)}">5</a></li>
+                            <li><a href="#" th:href="@{/(page=5)}">»</a></li>
+                        </th:block>
+
+                        <th:block th:if="${pageOut} != null">
+                            <li><a href="#" th:href="@{/(page=4)}">«</a></li>
+                            <li><a href="#" th:href="@{/(page=5)}">5</a></li>
+                            <li><a href="#" th:href="@{/(page=6)}">6</a></li>
+                            <li><a href="#" th:href="@{/(page=7)}">7</a></li>
+                            <li><a href="#" th:href="@{/(page=8)}">8</a></li>
+                            <li><a href="#" th:href="@{/(page=9)}">9</a></li>
+                            <li><a href="#" th:href="@{/(page=10)}">»</a></li>
+                        </th:block>
+                    </ul>
+                </nav>
+            </center>
+        </div>
+        <div class="col-md-3 product-bottom">
+            <div class=" rsidebar span_1_of_left">
+                <h4 class="cate">类别</h4>
+                <ul class="menu-drop">
+                    <th:block th:each="f,iterStat:${category}">
+                        <li class="item1"><a href="#" th:text="${f.cname}"></a>
+                            <ul class="cute">
+                                <th:block th:if="f.clist != null " th:each="c:${f.listc}">
+                                    <li class="subitem1"><a href="#" th:href="@{/(cid=${c.cid})}"
+                                                            th:text="${c.cname}"></a></li>
+                                </th:block>
+                            </ul>
+                        </li>
+                    </th:block>
+                </ul>
+            </div>
+            <script type="text/javascript">
+                $(function () {
+                    var menu_ul = $('.menu-drop > li > ul'),
+                        menu_a = $('.menu-drop > li > a');
+                    menu_ul.hide();
+                    menu_a.click(function (e) {
+                        e.preventDefault();
+                        if (!$(this).hasClass('active')) {
+                            menu_a.removeClass('active');
+                            menu_ul.filter(':visible').slideUp('normal');
+                            $(this).addClass('active').next().stop(true, true).slideDown('normal');
+                        } else {
+                            $(this).removeClass('active');
+                            $(this).next().stop(true, true).slideUp('normal');
+                        }
+                    });
+
+                });
+            </script>
+            <section class="sky-form">
+                <h4 class="cate">价格</h4>
+                <div class="row row1 scroll-pane">
+                    <div class="col col-4">
+                        <label class="checkbox"><a th:href="@{/price/0-1000}">0-1000</a></label>
+                        <label class="checkbox"><a th:href="@{/price/1000-2000}">1000-2000</a></label>
+                        <label class="checkbox"><a th:href="@{/price/2000-5000}">2000-5000</a></label>
+                        <label class="checkbox"><a th:href="@{/price/5000-10000}">5000-10000</a></label>
+                        <label class="checkbox"><a th:href="@{/price/10000-20000}">10000-20000</a></label>
+                        <label class="checkbox"><a th:href="@{/price/20000}">20000以上</a></label>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+</div>
+<footer class="footer" th:include="footer :: footer"></footer>
+</body>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script th:src="@{/html/js/simpleCart.min.js}"></script>
+<!-- slide -->
+<script th:src="@{/html/js/bootstrap.min.js}"></script>
+<!--light-box-files -->
+<script th:src="@{/html/js/jquery.chocolat.js}"></script>
+<link rel="stylesheet" th:href="@{/html/css/chocolat.css}" type="text/css" media="screen" charset="utf-8">
+<!--light-box-files -->
+<script type="text/javascript" charset="utf-8">
+    $(function () {
+        $('a.picture').Chocolat();
+    });
+</script>
+</html>

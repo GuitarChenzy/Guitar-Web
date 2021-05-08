@@ -1,0 +1,121 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>网上吉他售卖商城</title>
+    <link th:href="@{/html/css/bootstrap.css}" rel="stylesheet" type="text/css" media="all"/>
+    <!-- Custom Theme files -->
+    <!--theme-style-->
+    <link th:href="@{/html/css/style.css}" rel="stylesheet" type="text/css" media="all"/>
+    <!--//theme-style-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="Shopin Responsive web template, Bootstrap Web Templates, Flat Web Templates, AndroId Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design"/>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <!--theme-style-->
+    <link th:href="@{/html/css/style4.css}" rel="stylesheet" type="text/css" media="all"/>
+    <!--//theme-style-->
+    <script th:src="@{/html/js/jquery.min.js}"></script>
+    <!--- start-rate---->
+    <script th:src="@{/html/js/jstarbox.js}"></script>
+    <link rel="stylesheet" th:href="@{/html/css/jstarbox.css}" type="text/css" media="screen" charset="utf-8"/>
+    <script type="text/javascript">
+        jQuery(function () {
+            jQuery('.starbox').each(function () {
+                var starbox = jQuery(this);
+                starbox.starbox({
+                    average: starbox.attr('data-start-value'),
+                    changeable: starbox.hasClass('unchangeable') ? false : starbox.hasClass('clickonce') ? 'once' : true,
+                    ghosting: starbox.hasClass('ghosting'),
+                    autoUpdateAverage: starbox.hasClass('autoupdate'),
+                    buttons: starbox.hasClass('smooth') ? false : starbox.attr('data-button-count') || 5,
+                    stars: starbox.attr('data-star-count') || 5
+                }).bind('starbox-value-changed', function (event, value) {
+                    if (starbox.hasClass('random')) {
+                        var val = Math.random();
+                        starbox.next().text(' ' + val);
+                        return val;
+                    }
+                })
+            });
+        });
+    </script>
+    <!---//End-rate---->
+</head>
+<body>
+<header th:include="header :: header"></header>
+<div class="banner-top">
+    <div class="container">
+        <h1 th:text="${title}"></h1>
+        <em></em>
+        <h2><a th:href="@{/main}">Home</a><label>/</label>
+            <p th:text="${title}"></p></a></h2>
+    </div>
+</div>
+<div role="main">
+    <div class="container">
+        <div class="col-md-3"></div>
+        <div class="login">
+            <div class="col-md-6 login-do">
+                <th:block th:if="${state == 0}">
+                    <h3 th:text="个人信息"></h3>
+                    <form th:action="@{/user/update}" method="post">
+                        <div class="login-mail">
+                            姓名:<input type="text"
+                                      th:value="${user.realname}" name="realname"/>
+                            <i class="glyphicon glyphicon-user"></i>
+                        </div>
+                        <div class="login-mail">
+                            性别:<input type="text"
+                                      th:value="${user.sex}" name="sex"/>
+                            <i class="glyphicon glyphicon-user"></i>
+                        </div>
+                        <div class="login-mail">
+                            邮箱:<input type="text"
+                                      th:value="${user.email}" id="email" name="email"/>
+                            <i class="glyphicon glyphicon-envelope"></i>
+                            <span id="message2" style="color: red;"></span>
+                        </div>
+                        <div class="login-mail">
+                            住址:<input type="text"
+                                      th:value="${user.adress}" name="adress"/>
+                            <i class="glyphicon glyphicon-lock"></i>
+                        </div>
+                        <div class="login-mail">
+                            积分:<input type="text"
+                                      readonly="readonly"
+                                      th:value="${user.ucoin}"/>
+                            <i class="glyphicon glyphicon-user"></i>
+                        </div>
+                        <label class="hvr-skew-backward">
+                            <input type="submit" value="修改">
+                        </label>
+                    </form>
+                    <p th:text="用户非法" th:if="${user} == null"></p>
+                </th:block>
+                <th:block th:if="${state == 1}">
+                    <div th:include="purchase :: purchase"></div>
+                </th:block>
+                <th:block th:if="${state == 2}">
+                    <div th:include="order :: order"></div>
+                </th:block>
+                <th:block th:if="${state == 3}">
+                    <div th:include="favorite :: favorite"></div>
+                </th:block>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script th:src="@{/html/js/simpleCart.min.js}"></script>
+<!-- slide -->
+<script th:src="@{/html/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/purchase.js}"></script>
+</html>

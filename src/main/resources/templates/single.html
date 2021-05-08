@@ -1,0 +1,222 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>网上吉他售卖商城</title>
+    <link th:href="@{/html/css/bootstrap.css}" rel="stylesheet" type="text/css" media="all"/>
+    <!-- Custom Theme files -->
+    <!--theme-style-->
+    <link th:href="@{/html/css/style.css}" rel="stylesheet" type="text/css" media="all"/>
+    <!--//theme-style-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="Shopin Responsive web template, Bootstrap Web Templates, Flat Web Templates, AndroId Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design"/>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <!--theme-style-->
+    <link th:href="@{/html/css/style4.css}" rel="stylesheet" type="text/css" media="all"/>
+    <!--//theme-style-->
+    <script th:src="@{/html/js/jquery.min.js}"></script>
+    <!--- start-rate---->
+    <script th:src="@{/html/js/jstarbox.js}"></script>
+    <link rel="stylesheet" th:href="@{/html/css/jstarbox.css}" type="text/css" media="screen" charset="utf-8"/>
+    <script type="text/javascript">
+        jQuery(function () {
+            jQuery('.starbox').each(function () {
+                var starbox = jQuery(this);
+                starbox.starbox({
+                    average: starbox.attr('data-start-value'),
+                    changeable: starbox.hasClass('unchangeable') ? false : starbox.hasClass('clickonce') ? 'once' : true,
+                    ghosting: starbox.hasClass('ghosting'),
+                    autoUpdateAverage: starbox.hasClass('autoupdate'),
+                    buttons: starbox.hasClass('smooth') ? false : starbox.attr('data-button-count') || 5,
+                    stars: starbox.attr('data-star-count') || 5
+                }).bind('starbox-value-changed', function (event, value) {
+                    if (starbox.hasClass('random')) {
+                        var val = Math.random();
+                        starbox.next().text(' ' + val);
+                        return val;
+                    }
+                })
+            });
+        });
+    </script>
+    <!---//End-rate---->
+</head>
+<body>
+<header class="header" th:include="header :: header"></header>
+<div class="banner-top">
+    <div class="container">
+        <h1>商品</h1>
+        <em></em>
+        <h2><a th:href="@{/}">Home</a><label>/</label>商品详情</a></h2>
+    </div>
+</div>
+<div class="single">
+    <div class="container">
+        <th:block th:if="${#strings.isEmpty(goods)}">
+            <h3 th:text="'不存在该商品或该商品已经下架'"></h3>
+        </th:block>
+        <th:block th:if="${!#strings.isEmpty(goods)}">
+            <div class="col-md-9">
+                <div class="col-md-5 grid">
+                    <div class="flexslider">
+                        <ul class="slides">
+                            <li th:data-thumb="${goods.gimage}">
+                                <div class="thumb-image"><img src="" th:attr="src=${goods.gimage}" data-imagezoom="true"
+                                                              class="img-responsive"></div>
+                            </li>
+                            <li th:data-thumb="${goods.gimage}">
+                                <div class="thumb-image"><img src="" th:attr="src=${goods.gimage}" data-imagezoom="true"
+                                                              class="img-responsive"></div>
+                            </li>
+                            <li th:data-thumb="${goods.gimage}">
+                                <div class="thumb-image"><img src="" th:attr="src=${goods.gimage}" data-imagezoom="true"
+                                                              class="img-responsive"></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-7 single-top-in">
+                    <div class="span_2_of_a1 simpleCart_shelfItem">
+                        <h3><a href="#" th:text="${goods.gname}"></a></h3>
+                        <p class="in-para"> 数千万吉他爱好者的首选之品 </p>
+                        <div class="price_single">
+                            <span class="reducedfrom item_price" th:text="'价格：'+${goods.gprice}"></span>
+                            <div class="clearfix"></div>
+                        </div>
+                        <h4 class="quick">商品描述:</h4>
+                        <p class="quick_desc" th:text="${goods.gdesc}"></p>
+                        库存：<p class="quick_desc" id="count" th:text="${goods.gcount}"></p>
+                        <div class="wish-list">
+                            <ul>
+                                <li class="wish"><a href="#" th:href="@{/user/addfav(gid=${goods.gid},state=2)}">
+                                    <span class="glyphicon glyphicon-check" aria-hidden="true"></span>加入收藏</a></li>
+                            </ul>
+                        </div>
+                        <form th:action="@{/purchase/add}" method="GET">
+                            <div class="quantity">
+                                <div class="quantity-select">
+                                    <div class="entry value-minus">&nbsp;</div>
+                                    <input type="text" name="gcount" class="entry value" value="1"/>
+                                    <div class="entry value-plus active">&nbsp;</div>
+                                </div>
+                            </div>
+                            <!--quantity-->
+                            <script>
+                                $('.value-plus').on('click', function () {
+                                    var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.val(), 10) + 1;
+                                    var count = $("#count").html();
+                                    if (newVal > parseInt(count)) {
+                                        alert("超出库存！，请重新选择");
+                                        return;
+                                    }
+                                    divUpd.val(newVal);
+                                });
+
+                                $('.value-minus').on('click', function () {
+                                    var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.val(), 10) - 1;
+                                    if (newVal >= 1) divUpd.val(newVal);
+                                });
+                            </script>
+                            <!--quantity-->
+                            <input name="gid" type="hidden" th:value="${goods.gid}"/>
+                            <input type="submit" class="add-to item_add hvr-skew-backward" value="添加到购物车"/>
+                        </form>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </th:block>
+        <div class="col-md-3 product-bottom">
+            <div class=" rsidebar span_1_of_left">
+                <h4 class="cate">类别</h4>
+                <ul class="menu-drop">
+                    <th:block th:each="f,iterStat:${category}">
+                        <li class="item1"><a href="#" th:text="${f.cname}"></a>
+                            <ul class="cute">
+                                <th:block th:if="f.clist != null " th:each="c:${f.listc}">
+                                    <li class="subitem1"><a href="#" th:href="@{/(cid=${c.cid})}"
+                                                            th:text="${c.cname}"></a></li>
+                                </th:block>
+                            </ul>
+                        </li>
+                    </th:block>
+                </ul>
+            </div>
+            <script type="text/javascript">
+                $(function () {
+                    var menu_ul = $('.menu-drop > li > ul'),
+                        menu_a = $('.menu-drop > li > a');
+                    menu_ul.hide();
+                    menu_a.click(function (e) {
+                        e.preventDefault();
+                        if (!$(this).hasClass('active')) {
+                            menu_a.removeClass('active');
+                            menu_ul.filter(':visible').slideUp('normal');
+                            $(this).addClass('active').next().stop(true, true).slideDown('normal');
+                        } else {
+                            $(this).removeClass('active');
+                            $(this).next().stop(true, true).slideUp('normal');
+                        }
+                    });
+
+                });
+            </script>
+            <section class="sky-form">
+                <h4 class="cate">价格</h4>
+                <div class="row row1 scroll-pane">
+                    <div class="col col-4">
+                        <label class="checkbox"><a th:href="@{/price/0-1000}">0-1000</a></label>
+                        <label class="checkbox"><a th:href="@{/price/1000-2000}">1000-2000</a></label>
+                        <label class="checkbox"><a th:href="@{/price/2000-5000}">2000-5000</a></label>
+                        <label class="checkbox"><a th:href="@{/price/5000-10000}">5000-10000</a></label>
+                        <label class="checkbox"><a th:href="@{/price/10000-20000}">10000-20000</a></label>
+                        <label class="checkbox"><a th:href="@{/price/20000}">20000以上</a></label>
+                    </div>
+                </div>
+            </section>
+            <div class="clearfix"></div>
+        </div>
+        <h2>猜你喜欢</h2>
+        <div class="container">
+            <div class="brand">
+                <th:block th:each="g,iterStat:${goodsList}">
+                    <div class="col-md-3 brand-grid">
+                        <a href="#" th:href="@{'/item/'+${g.gid}}">
+                            <img src="" th:attr="src=${g.gimage}"
+                                 class="img-responsive" alt=""></a>
+                        <p><em th:text="${g.gname}" class="item_price"></em></p>
+                        <p><em th:text="'价格:'+${g.gprice}" class="item_price"></em></p>
+                    </div>
+                </th:block>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="footer" th:include="footer :: footer"></footer>
+</body>
+<script th:src="@{/html/js/imagezoom.js}"></script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script defer th:src="@{/html/js/jquery.flexslider.js}"></script>
+<link rel="stylesheet" th:href="@{/html/css/flexslider.css}" type="text/css" media="screen"/>
+<script>
+    // Can also be used with $(document).ready()
+    $(window).load(function () {
+        $('.flexslider').flexslider({
+            animation: "slide",
+            controlNav: "thumbnails"
+        });
+    });
+</script>
+<script th:src="@{/html/js/simpleCart.min.js}"></script>
+<!-- slide -->
+<script th:src="@{/html/js/bootstrap.min.js}"></script>
+</html>

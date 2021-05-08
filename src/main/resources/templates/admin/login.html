@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>网上商城后台管理系统</title>
+    <meta charset="UTF-8">
+</head>
+<script type="text/javascript" th:src="@{/easyui/locale/easyui-lang-zh_CN.js}"></script>
+<script type="text/javascript" th:src="@{/easyui/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/easyui/jquery.easyui.min.js}"></script>
+<link th:href="@{/easyui/themes/icon.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/easyui/themes/default/easyui.css}" rel="stylesheet"
+      type="text/css">
+<script type="text/JavaScript">
+    $(function () {
+        $("#code").click(function () {
+            $(this).attr("src", "/admin/code?time=" + new Date());
+        });
+    })
+</script>
+<body>
+<form title="登录界面" class="easyui-window" collapsible="false"
+      minimizable="false" maximizable="false" resizable="false"
+      style="width:500px;height:200px;" method="POST"
+      th:action="@{/a-login}">
+    <table>
+        <tr>
+            <td>用户名：</td>
+            <td><input type="text" name="username" required="required"/></td>
+        </tr>
+        <tr>
+            <td>密码：</td>
+            <td><input type="password" name="password" required="required"/></td>
+        </tr>
+        <tr>
+            <td><input type="hidden" value="身份"/></td>
+            <td><input type="hidden" checked="checked"
+                       name="status" value="1"/></td>
+        </tr>
+        <tr>
+            <td>验证码：</td>
+            <td><input type="text" name="checkcode" required="required"/></td>
+            <td><img id="code" th:src="@{/code}"/></td>
+        </tr>
+        <tr>
+            <td colspan="2"><p style="color: red" th:text="${message}"></p></td>
+            <td colspan="2"><input width="100px" type="submit" value="登录"/>
+                <input width="100px" type="reset" value="重置"/></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

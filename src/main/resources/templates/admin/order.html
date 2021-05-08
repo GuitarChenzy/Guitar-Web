@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<link th:href="@{/easyui/themes/icon.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/easyui/themes/default/easyui.css}" rel="stylesheet">
+<body id="bodylayout">
+<table class="easyui-datagrid" id="dg" title="订单列表"
+       style="width:100%;height:500px" toolbar="#toolbar">
+</table>
+<div id="toolbar">
+    <form th:action="@{/order/excel}" method="post">
+        时间: <input id="startTime" name="startTime"
+                   class="easyui-datetimebox" style="width:180px">
+        至: <input id="endTime" name="endTime"
+                  class="easyui-datetimebox" style="width:180px">
+        状态:<select id="state" name="state" class="easyui-combobox"
+                  style="width:100px;"></select>
+        <input class="easyui-searchbox"
+               data-options="prompt:'Please Input Value',
+    menu:'#mm',searcher:findOrder"
+               type="text" id="snoo" size="50"/>
+        <div id="mm">
+            <div data-options="name:'userName',iconCls:'icon-ok'">用户名</div>
+            <div data-options="name:'oid'">订单号</div>
+        </div>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true"
+           onclick="javascript:deleteOrder()">删除</a>
+        <input class="easyui-linkbutton" iconCls="icon-print" type="submit" plain="true" value="生成报表"/>
+    </form>
+</div>
+</body>
+<script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/easyui/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/easyui/jquery.easyui.min.js}"></script>
+<script type="text/javascript" th:src="@{/easyui/locale/easyui-lang-zh_CN.js}"></script>
+<script type="text/javascript" th:src="@{/admin/datagrid-detailview.js}"></script>
+<script type="text/javascript" th:src="@{/admin/order.js}"></script>
+</html>

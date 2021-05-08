@@ -1,0 +1,61 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="favorite">
+    <div class="container">
+        <div class="check-out">
+            <div class="bs-example4" data-example-id="simple-responsive-table">
+                <div class="table-responsive">
+                    <th:block th:if="${#lists.isEmpty(goodslist)}">
+                        <h3 th:text="'收藏里里空空的,快去添加一点收藏吧'"></h3>
+                        <a th:href="@{/}" th:text="去收藏"></a>
+                    </th:block>
+                    <table>
+                        <tr>
+                            <th>商品名</th>
+                            <th style="width: 50px">库存</th>
+                            <th>购买价格</th>
+                            <th>图片</th>
+                            <th>商品描述</th>
+                            <th>操作</th>
+                            <th>操作</th>
+                        </tr>
+                        <th:block th:if="${goodslist} != null" th:each="goods,iterStat:${goodslist}">
+                            <tr>
+                                <td><p th:text="${goods.gname}"></p></td>
+                                <td style="width: 50px"><p th:text="${goods.gcount}"></p></td>
+                                <td><p th:text="${goods.gprice}"></p></td>
+                                <td><a href="#" th:href="@{'/item/'+${goods.gid}}">
+                                    <img style="width: 75px; height: 75px;" src="" th:attr="src=${goods.gimage}"
+                                         alt="sample product"/></a></td>
+                                <td><p th:text="${goods.gdesc}"></p></td>
+                                <td><a class="item_add hvr-skew-backward"
+                                       th:href="@{/purchase/add(gid=${goods.gid},gcount=1)}">加入购物车 <i
+                                        class="fa fa-arrow-circle-right"></i></a></td>
+                                <td><a class="item_add hvr-skew-backward"
+                                       th:href="@{/user/remove(gid=${goods.gid})}">移除收藏 <i
+                                        class="fa fa-arrow-circle-right"></i></a></td>
+                            </tr>
+                        </th:block>
+                    </table>
+                    <center>
+                        <nav>
+                            <ul class="pagination">
+                                <li class="disabled"><a href="#">«</a></li>
+                                <li><a href="#" th:href="@{/user/(page=0,state=3)}">1 <span
+                                        class="sr-only">(current)</span></a></li>
+                                <li><a href="#" th:href="@{/user/(page=1,state=3)}">2</a></li>
+                                <li><a href="#" th:href="@{/user/(page=2,state=3)}">3</a></li>
+                                <li><a href="#" th:href="@{/user/(page=3,state=3)}">4</a></li>
+                                <li><a href="#" th:href="@{/user/(page=4,state=3)}">5</a></li>
+                                <li><a href="#" th:href="@{/user/(page=5,state=3)}">»</a></li>
+                            </ul>
+                        </nav>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

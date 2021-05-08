@@ -1,0 +1,35 @@
+server:
+  port: 80
+spring:
+  datasource:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/myshop?useUnicode=true&characterEncoding=utf8
+      username: root
+      password: 123456
+      type: com.alibaba.druid.pool.DruidDataSource
+  thymeleaf:
+      prefix: classpath:/templates/
+      suffix: .html
+      cache: false
+      mode: HTML5
+      encoding: utf-8
+  mvc:
+      throw-exception-if-no-handler-found: false
+  resources:
+      add-mappings: true
+  mail:
+    host: smtp.qq.com
+    password: cuxewzktswbcbdgh
+    username: 602974311@qq.com
+    default-encoding: UTF-8
+    port: 25
+    protocol: smtp
+    
+logging:
+  level:
+    com.cogu.shop.dao : debug
+  file: /logs/spring-boot-logging.log
+
+
+
+

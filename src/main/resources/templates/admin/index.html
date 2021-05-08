@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>网上商城后台管理系统</title>
+    <meta charset="UTF-8">
+</head>
+<link th:href="@{/easyui/themes/icon.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/easyui/themes/default/easyui.css}" rel="stylesheet">
+<link th:href="@{/css/admin-index.css}" rel="stylesheet">
+<body id="bodylayout">
+<!--<div style="background-color: #AFEEEE ;height:50px"
+     data-options="region:'north',title:'首页'">
+    <h3 align="center">网上吉他售卖系统后台管理</h3>
+</div>-->
+<div data-options="region:'west',title:'导航菜单栏'"
+     style="width:200px;">
+    <div id="menu" class="easyui-accordion" width="100%">
+        <div title="当前管理员" data-options="iconCls:'icon-folder'"
+             style="overflow:auto;padding:10px;">
+            <ul>
+                <p th:text="${session.admin.rolename}"></p>
+                <a href="#" th:href="@{/admin/logout}">注销</a>
+            </ul>
+        </div>
+    </div>
+    <div id="munes" class="easyui-panel" style="padding:5px">
+        <ul class="easyui-tree" data-options=" animate:true,lines:true">
+            <li>
+                <span>后台管理菜单</span>
+                <ul>
+                    <li>
+                        <span>基本信息管理</span>
+                        <ul>
+                            <li><span>类别管理</span></li>
+                            <li><span>商品管理</span></li>
+                            <li><span>订单管理</span></li>
+                            <li><span>销售统计</span></li>
+                        </ul>
+                    </li>
+                    <li data-options="state:'closed'">
+                        <span>权限信息管理</span>
+                        <ul>
+                            <li><span>用户管理</span></li>
+                            <li><span>角色管理</span></li>
+                            <li><span>资源管理</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<div data-options="region:'center',title:'操作栏'" style="padding:1px;">
+    <div id="tt" class="easyui-tabs" data-options="fit:true, border:false"
+         width="500px">
+        <div title="首页">欢迎来到网上吉他售卖系统后台管理页面
+        </div>
+    </div>
+</div>
+<!--<div data-options="region:'south',title:'底框',split:false"
+     style="height:75px;">
+    <p align="center">管理系统 @author:陈泽宇</p>
+</div>-->
+</body>
+<script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/admin/index.js}"></script>
+<script type="text/javascript" th:src="@{/easyui/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/easyui/jquery.easyui.min.js}"></script>
+<script type="text/javascript" th:src="@{/easyui/locale/easyui-lang-zh_CN.js}"></script>
+</html>

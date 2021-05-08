@@ -1,0 +1,99 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="purchase">
+    <div class="container">
+        <div class="check-out">
+            <div class="bs-example4" data-example-id="simple-responsive-table">
+                <div class="table-responsive">
+                    <th:block th:if="${#lists.isEmpty(purchase)}">
+                        <h3 th:text="'购物车里空空的,快去买点东西吧'"></h3>
+                        <a th:href="@{/}" th:text="去购物"></a>
+                    </th:block>
+                    <form th:action="@{/user/add}" method="post">
+                        <table class="table-heading simpleCart_shelfItem">
+                            <tr>
+                                <th class="table-grid">商品</th>
+                                <th>价格</th>
+                                <th>数量</th>
+                                <th>操作</th>
+                            </tr>
+                            <th:block th:if="${purchase} != null" th:each="p,index:${purchase}">
+                                <th:block th:if="${p.goods.gstate} == 1">
+                                    <td><input class="checkDeployInfo" type="checkbox" th:name="pid"
+                                               th:value="${p.pid}"/>
+                                    </td>
+                                    <tr class="cart-header">
+                                        <td class="ring-in">
+                                            <a href="" th:href="@{'/item/'+${p.goods.gid}}" class="at-in">
+                                                <img src="" th:attr="src=${p.goods.gimage}" class="img-responsive"
+                                                     alt=""></a>
+                                            <div class="sed">
+                                                <h5 th:text="${p.goods.gname}"></h5>
+                                                <p th:text="${p.goods.gdesc}"></p>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </td>
+                                        <td class="class-price" th:text="${p.goods.gprice}"></td>
+                                        <td><p class="class-count" th:text="${p.goods.gcount}"></p></td>
+                                        <td class="add-check">
+                                            <a class="item_add hvr-skew-backward"
+                                               th:href="@{/user/delete(pid=${p.pid})}">移出购物车</a>
+                                        </td>
+                                    </tr>
+                                </th:block>
+                                <th:block th:if="${p.goods.gstate} == 0">
+                                    <tr class="cart-header">
+                                        <td class="ring-in">
+                                            <img src="" th:attr="src=${p.goods.gimage}" class="img-responsive"
+                                                 alt="">
+
+                                            <div class="clearfix"></div>
+                                        </td>
+                                        <td><h5 th:text="${'该商品已经下架'}"></h5></td>
+                                        <td><p th:text="${p.goods.gname}"></p></td>
+                                        <td class="add-check">
+                                            <a class="item_add hvr-skew-backward"
+                                               th:href="@{/user/delete(pid=${p.pid})}">移出购物车</a>
+                                        </td>
+                                    </tr>
+                                </th:block>
+                            </th:block>
+                        </table>
+                        总价：<input type="text" style="width: 150px; height: 30px;color: red;background: white"
+                                  th:name="oprice" id="total" readonly="readonly"/>
+                        收货地址:<input th:name="oadress" type="text" value=""
+                                    required="required" style="width: 200px;height: 30px;background: white"/>
+                        支付方式：<select th:name="paytype">
+                        <option selected="selected" value="支付宝">支付宝</option>
+                        <option value="微信">微信</option>
+                        <option value="货到付款">货到付款</option>
+                    </select>
+                        <label class="hvr-skew-backward">
+                            <input type="submit" value="下订单">
+                        </label>
+                    </form>
+                    <div class="produced">
+                        <a class="hvr-skew-backward" th:href="@{/user/clear}">清空购物车</a>
+                    </div>
+                    <center>
+                        <nav>
+                            <ul class="pagination">
+                                <li class="disabled"><a href="#">«</a></li>
+                                <li><a href="#" th:href="@{/user/(page=0,state=1)}">1 <span
+                                        class="sr-only">(current)</span></a></li>
+                                <li><a href="#" th:href="@{/user/(page=1,state=1)}">2</a></li>
+                                <li><a href="#" th:href="@{/user/(page=2,state=1)}">3</a></li>
+                                <li><a href="#" th:href="@{/user/(page=3,state=1)}">4</a></li>
+                                <li><a href="#" th:href="@{/user/(page=4,state=1)}">5</a></li>
+                                <li><a href="#" th:href="@{/user/(page=5,state=1)}">»</a></li>
+                            </ul>
+                        </nav>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

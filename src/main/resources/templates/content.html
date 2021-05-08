@@ -1,0 +1,130 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="content">
+    <div class="content-top">
+        <div class="col-md-6 col-md">
+            <div class="col-1">
+                <a th:href="@{/(cid=8)}" class="b-link-stroke b-animate-go  thickbox">
+                    <img style="height:658.233px;" th:src="@{/html/images/timg5.jpg}" class="img-responsive" alt=""/>
+                    <div class="b-wrapper1 long-img"><p class="b-animate b-from-right    b-delay03 ">电吉他</p>
+                        <label class="b-animate b-from-right    b-delay03 "></label>
+                        <h3 class="b-animate b-from-left    b-delay03 ">Fender</h3></div>
+                </a>
+            </div>
+            <div class="col-2">
+                <span>Guitar</span>
+                <h2><a th:href="@{/product}">吉他历史</a></h2>
+                <p>吉他（意大利语：Chitarra），又译为结他或六弦琴。是一种弹拨乐器，通常有六条弦，形状与提琴相似。
+                    吉他在流行音乐、摇滚音乐、蓝调、民歌、佛朗明哥中，常被视为主要乐器。而在古典音乐的领域里，吉他常以独奏或二重奏的型式演出；当然，在室内乐和管弦乐中，吉他亦扮演着相当程度的陪衬角色。
+                    古典吉他与小提琴、钢琴并列为世界著名三大乐器。吉他的祖先，可以追溯到公元前两三千年前古埃及的耐法尔，古巴比伦和古波斯的各种古弹拨乐器。
+                    考古学家找到的最古老的类似现代吉他的乐器，是公元前1400年前生活在小亚细亚和叙利亚北部的古赫梯人城门遗址上的“赫梯吉他”。
+                    8字型内弯的琴体决定了吉他属乐器特有的声音共鸣和乐器特点，这也成为吉他与其它弹拨乐器的最显著特点。在十三世纪的西班牙，由波斯语逐渐演化成的西班牙语吉他一词就已经形成，在当时种类繁多的乐器中，
+                    已经出现了“摩尔吉他”和“拉丁吉他”。其中摩尔吉他琴体为椭圆形背部鼓起，使用金属弦，演奏风格比较粗犷；拉丁吉他琴体为与现代吉他类似的8字型平底结构，使用羊肠弦，风格典雅。
+                </p>
+                <a th:href="@{/product}" class="buy-now">立刻购买</a>
+            </div>
+        </div>
+        <div class="col-md-6 col-md1">
+            <div class="col-3">
+                <a th:href="@{/(cid=6)}"><img style="width:540px;" th:src="@{/html/images/timg6.jpg}"
+                                              class="img-responsive" alt="">
+                    <div class="col-pic">
+                        <p>木吉他</p>
+                        <label></label>
+                        <h5>Taylor</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="col-3">
+                <a th:href="@{/(cid=7)}"><img style="width:540px;" th:src="@{/html/images/timg7.jpg}"
+                                              class="img-responsive" alt="">
+                    <div class="col-pic">
+                        <p>木吉他</p>
+                        <label></label>
+                        <h5>MarTin</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="col-3">
+                <a th:href="@{/(cid=12)}"><img th:src="@{/html/images/timg8.jpg}" class="img-responsive" alt="">
+                    <div class="col-pic">
+                        <p>古典吉他</p>
+                        <label></label>
+                        <h5>马丁尼</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <!--products-->
+    <div class="content-mid">
+        <h3>热销商品</h3>
+        <label class="line"></label>
+        <div class="mid-popular">
+            <th:block th:each="g,iterStat:${goods}">
+                <div style="width:30%;height: 350px" class="col-md-3 item-grid simpleCart_shelfItem">
+                    <div class=" mid-pop">
+                        <div class="pro-img">
+                            <img src=" " th:attr="src=${g.gimage}" class="img-responsive" alt="">
+                            <div class="zoom-icon">
+                                <a href="#" th:href="${g.gimage}" rel="title"
+                                   class=" picture b-link-stripe b-animate-go  thickbox"><i
+                                        class="glyphicon glyphicon-search icon "></i></a>
+                                <a href="#" th:href="@{'/item/'+${g.gid}}"><i
+                                        class="glyphicon glyphicon-menu-right icon"></i></a>
+                            </div>
+                        </div>
+                        <div class="mid-1">
+                            <div class="women" style="height: 75px;width: 100%">
+                                <div class="women-top">
+                                    <span th:text="${g.category.cname}"></span>
+                                    <h6><a style="height:90px;" href="#" th:href="@{'/item/'+${g.gid}}"
+                                           th:text="${g.gname}"></a></h6>
+                                </div>
+                                <div class="img item_add">
+                                    <a href="#" th:href="@{/user/addfav(gid=${g.gid},state=1)}"><img
+                                            style="width: 40px;height: 40px"
+                                            th:src="@{/html/images/collect1.png}" alt=""></a>
+                                    <a href="#" th:href="@{/purchase/add(gid=${g.gid},gcount=1)}"><img
+                                            th:src="@{/html/images/ca.png}" alt=""></a>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="mid-2">
+                                <p><label></label><em th:text="'价格:'+${g.gprice}" class="item_price"></em></p>
+                                <div class="block">
+                                    <div class="starbox small ghosting">
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <!--//products-->
+    <!--brand-->
+    <div class="brand">
+        <div class="col-md-3 brand-grid">
+            <img style="width: 225px;height:175px;" th:src="@{/html/images/ic.png}" class="img-responsive" alt="">
+        </div>
+        <div class="col-md-3 brand-grid">
+            <img style="width: 225px;height:175px;" th:src="@{/html/images/ic1.png}" class="img-responsive" alt="">
+        </div>
+        <div class="col-md-3 brand-grid">
+            <img style="width: 225px;height:175px;" th:src="@{/html/images/ic2.png}" class="img-responsive" alt="">
+        </div>
+        <div class="col-md-3 brand-grid">
+            <img style="width: 225px;height:175px;" th:src="@{/html/images/ic3.png}" class="img-responsive" alt="">
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <!--//brand-->
+</div>
+</body>
+</html>
